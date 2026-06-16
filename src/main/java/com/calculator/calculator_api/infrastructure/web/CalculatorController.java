@@ -3,6 +3,7 @@ package com.calculator.calculator_api.infrastructure.web;
 import com.calculator.calculator_api.application.CalculatorService;
 import com.calculator.calculator_api.infrastructure.web.dto.BinaryOperationRequest;
 import com.calculator.calculator_api.infrastructure.web.dto.CalculatorResponse;
+import com.calculator.calculator_api.infrastructure.web.dto.UnaryOperationRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -86,6 +87,17 @@ public class CalculatorController {
         );
         return ResponseEntity.ok(new CalculatorResponse(result));
     }
+
+    @PostMapping("/squarRoot")
+    public ResponseEntity<CalculatorResponse> squareRoot(
+            @Valid @RequestBody UnaryOperationRequest request
+            ) {
+        double result = calculatorService.squareRoot(
+                request.value()
+        );
+        return ResponseEntity.ok(new CalculatorResponse(result));
+    }
+
 
 
 }
