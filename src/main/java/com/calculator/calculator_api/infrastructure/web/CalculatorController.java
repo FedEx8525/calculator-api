@@ -24,8 +24,19 @@ public class CalculatorController {
     @PostMapping("/add")
     public ResponseEntity<CalculatorResponse> add(
             @Valid @RequestBody BinaryOperationRequest request
-            ) {
+    ) {
         double result = calculatorService.add(
+                request.firstValue(),
+                request.secondValue()
+        );
+        return ResponseEntity.ok(new CalculatorResponse(result));
+    }
+
+    @PostMapping("/subtract")
+    public ResponseEntity<CalculatorResponse> subtract(
+            @Valid @RequestBody BinaryOperationRequest request
+    ) {
+        double result = calculatorService.subtract(
                 request.firstValue(),
                 request.secondValue()
         );
