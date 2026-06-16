@@ -121,4 +121,9 @@ public class CalculatorController {
         return ResponseEntity.ok(new CalculatorResponse(result));
     }
 
+    @DeleteMapping("/memory")
+    public ResponseEntity<Void> clearMemory() {
+        calculatorService.clearMemory();
+        return ResponseEntity.noContent().build();
+    }
 }
