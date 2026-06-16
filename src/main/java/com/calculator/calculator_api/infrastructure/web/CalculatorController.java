@@ -106,4 +106,12 @@ public class CalculatorController {
         double result = calculatorService.euler();
         return ResponseEntity.ok(new CalculatorResponse(result));
     }
+
+    @PostMapping("/saveInMemory")
+    public ResponseEntity<CalculatorResponse> saveInMemory(
+            @Valid @RequestBody UnaryOperationRequest request
+    ) {
+        calculatorService.saveInMemory(request.value());
+        return ResponseEntity.noContent().build();
+    }
 }
