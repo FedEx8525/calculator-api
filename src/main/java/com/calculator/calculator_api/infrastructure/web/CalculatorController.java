@@ -100,4 +100,10 @@ public class CalculatorController {
         double result = calculatorService.pi();
         return ResponseEntity.ok(new CalculatorResponse(result));
     }
+
+    @GetMapping("/euler")
+    public ResponseEntity<CalculatorResponse> euler() {
+        double result = calculatorService.euler();
+        return ResponseEntity.ok(new CalculatorResponse(result));
+    }
 }
