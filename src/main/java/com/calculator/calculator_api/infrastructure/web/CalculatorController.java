@@ -65,5 +65,17 @@ public class CalculatorController {
         return ResponseEntity.ok(new CalculatorResponse(result));
     }
 
+    @PostMapping("/modulo")
+    public ResponseEntity<CalculatorResponse> modulo(
+            @Valid @RequestBody BinaryOperationRequest request
+    ) {
+        double result = calculatorService.modulo(
+                request.firstValue(),
+                request.secondValue()
+        );
+        return ResponseEntity.ok(new CalculatorResponse(result));
+    }
+
+
 
 }
