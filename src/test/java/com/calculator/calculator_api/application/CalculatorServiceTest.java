@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class CalculatorServiceTest {
+class CalculatorServiceTest {
 
     private CalculatorService calculatorService;
 
@@ -63,6 +63,12 @@ public class CalculatorServiceTest {
         double result = calculatorService.modulo(10.0, 3.0);
 
         assertEquals(1.0, result);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenModuloByZero() {
+        assertThrows(DivisionByZeroException.class, () ->
+                calculatorService.modulo(10.0, 0.0));
     }
 
     @Test
