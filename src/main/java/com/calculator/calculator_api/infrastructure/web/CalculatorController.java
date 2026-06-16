@@ -6,10 +6,7 @@ import com.calculator.calculator_api.infrastructure.web.dto.CalculatorResponse;
 import com.calculator.calculator_api.infrastructure.web.dto.UnaryOperationRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/calculator")
@@ -88,7 +85,7 @@ public class CalculatorController {
         return ResponseEntity.ok(new CalculatorResponse(result));
     }
 
-    @PostMapping("/squarRoot")
+    @PostMapping("/squareRoot")
     public ResponseEntity<CalculatorResponse> squareRoot(
             @Valid @RequestBody UnaryOperationRequest request
             ) {
@@ -98,6 +95,9 @@ public class CalculatorController {
         return ResponseEntity.ok(new CalculatorResponse(result));
     }
 
-
-
+    @GetMapping("/pi")
+    public ResponseEntity<CalculatorResponse> pi() {
+        double result = calculatorService.pi();
+        return ResponseEntity.ok(new CalculatorResponse(result));
+    }
 }
