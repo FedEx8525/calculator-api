@@ -76,6 +76,16 @@ public class CalculatorController {
         return ResponseEntity.ok(new CalculatorResponse(result));
     }
 
+    @PostMapping("/power")
+    public ResponseEntity<CalculatorResponse> power(
+            @Valid @RequestBody BinaryOperationRequest request
+    ) {
+        double result = calculatorService.power(
+                request.firstValue(),
+                request.secondValue()
+        );
+        return ResponseEntity.ok(new CalculatorResponse(result));
+    }
 
 
 }
