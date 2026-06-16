@@ -123,9 +123,7 @@ class CalculatorServiceTest {
 
     @Test
     void shouldReturnZeroWhenMemoryIsEmpty() {
-        double result = calculatorService.readInMemory();
-
-        assertEquals(0.0, result);
+        assertEquals(0.0, calculatorService.readInMemory());
     }
 }
 
