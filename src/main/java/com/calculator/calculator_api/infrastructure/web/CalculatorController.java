@@ -85,7 +85,7 @@ public class CalculatorController {
         return ResponseEntity.ok(new CalculatorResponse(result));
     }
 
-    @PostMapping("/squareRoot")
+    @PostMapping("/square-root")
     public ResponseEntity<CalculatorResponse> squareRoot(
             @Valid @RequestBody UnaryOperationRequest request
     ) {
