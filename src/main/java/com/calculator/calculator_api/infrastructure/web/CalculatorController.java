@@ -88,7 +88,7 @@ public class CalculatorController {
     @PostMapping("/squareRoot")
     public ResponseEntity<CalculatorResponse> squareRoot(
             @Valid @RequestBody UnaryOperationRequest request
-            ) {
+    ) {
         double result = calculatorService.squareRoot(
                 request.value()
         );
@@ -107,16 +107,16 @@ public class CalculatorController {
         return ResponseEntity.ok(new CalculatorResponse(result));
     }
 
-    @PostMapping("/saveInMemory")
-    public ResponseEntity<CalculatorResponse> saveInMemory(
+    @PostMapping("/memory")
+    public ResponseEntity<Void> saveInMemory(
             @Valid @RequestBody UnaryOperationRequest request
     ) {
         calculatorService.saveInMemory(request.value());
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/readInMemory")
-    public ResponseEntity<CalculatorResponse> readInMemory(){
+    @GetMapping("/memory")
+    public ResponseEntity<CalculatorResponse> readInMemory() {
         double result = calculatorService.readInMemory();
         return ResponseEntity.ok(new CalculatorResponse(result));
     }
