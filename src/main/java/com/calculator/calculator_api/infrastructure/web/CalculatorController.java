@@ -114,4 +114,11 @@ public class CalculatorController {
         calculatorService.saveInMemory(request.value());
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/readInMemory")
+    public ResponseEntity<CalculatorResponse> readInMemory(){
+        double result = calculatorService.readInMemory();
+        return ResponseEntity.ok(new CalculatorResponse(result));
+    }
+
 }
