@@ -53,4 +53,17 @@ public class CalculatorController {
         );
         return ResponseEntity.ok(new CalculatorResponse(result));
     }
+
+    @PostMapping("/divide")
+    public ResponseEntity<CalculatorResponse> divide(
+            @Valid @RequestBody BinaryOperationRequest request
+    ) {
+        double result = calculatorService.divide(
+                request.firstValue(),
+                request.secondValue()
+        );
+        return ResponseEntity.ok(new CalculatorResponse(result));
+    }
+
+
 }
