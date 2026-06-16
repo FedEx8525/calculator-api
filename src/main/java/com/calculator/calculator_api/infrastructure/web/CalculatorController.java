@@ -42,4 +42,15 @@ public class CalculatorController {
         );
         return ResponseEntity.ok(new CalculatorResponse(result));
     }
+
+    @PostMapping("/multiply")
+    public ResponseEntity<CalculatorResponse> multiply(
+            @Valid @RequestBody BinaryOperationRequest request
+    ) {
+        double result = calculatorService.multiply(
+                request.firstValue(),
+                request.secondValue()
+        );
+        return ResponseEntity.ok(new CalculatorResponse(result));
+    }
 }
