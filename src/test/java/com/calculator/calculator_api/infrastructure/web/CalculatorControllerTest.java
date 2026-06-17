@@ -3,6 +3,7 @@ package com.calculator.calculator_api.infrastructure.web;
 
 import com.calculator.calculator_api.application.CalculatorService;
 import com.calculator.calculator_api.domain.exception.DivisionByZeroException;
+import com.calculator.calculator_api.domain.exception.NegativeSquareRootException;
 import com.calculator.calculator_api.infrastructure.web.exception.GlobalExceptionHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +12,9 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(CalculatorController.class)
@@ -119,6 +120,27 @@ public class CalculatorControllerTest {
     }
 
     @Test
+    void shouldReturnBadRequestWhenSquareRootIsNegative() throws Exception {
+        when(calculatorService.squareRoot(-25.0))
+                .thenThrow(new NegativeSquareRootException());
+
+        mockMvc.perform(post("/api/calculator/square-root")
+                .contentType("application/json")
+                .content("""
+                        {
+                          "value": -25.0
+                        }
+                        """))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.error").value("Bad Request"))
+                .andExpect(jsonPath("$.message")
+                        .value("Cannot calculate square root of a negative number"))
+                .andExpect(jsonPath("$.path")
+                        .value("/api/calculator/square-root"));
+    }
+
+    @Test
     void shouldReturnPi() throws Exception {
         when(calculatorService.pi())
                 .thenReturn(Math.PI);
@@ -126,6 +148,40 @@ public class CalculatorControllerTest {
         mockMvc.perform(get("/api/calculator/pi"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.result").value(Math.PI));
+    }
+
+    @Test
+    void shouldSaveValueInMemory() throws Exception {
+
+        mockMvc.perform(post("/api/calculator/memory")
+                .contentType("application/json")
+                .content("""
+                        {
+                          "value": 25.0
+                        }
+                        """))
+                .andExpect(status().isNoContent());
+
+        verify(calculatorService).saveInMemory(25.0);
+    }
+
+    @Test
+    void shouldReadValueFromMemory() throws Exception {
+       when(calculatorService.readInMemory())
+               .thenReturn(25.0);
+
+        mockMvc.perform(get("/api/calculator/memory"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.result").value(25.0));
+
+    }
+
+    @Test
+    void shouldClearMemory() throws Exception {
+        mockMvc.perform(delete("/api/calculator/memory"))
+                .andExpect(status().isNoContent());
+
+        verify(calculatorService).clearMemory();
     }
 
 
