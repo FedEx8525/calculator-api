@@ -4,6 +4,8 @@ import com.calculator.calculator_api.application.CalculatorService;
 import com.calculator.calculator_api.infrastructure.web.dto.BinaryOperationRequest;
 import com.calculator.calculator_api.infrastructure.web.dto.CalculatorResponse;
 import com.calculator.calculator_api.infrastructure.web.dto.UnaryOperationRequest;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -107,6 +109,11 @@ public class CalculatorController {
         return ResponseEntity.ok(new CalculatorResponse(result));
     }
 
+    @Operation(summary = "Save a value in calculator memory")
+    @ApiResponse(
+            responseCode = "204",
+            description = "Value saved successfully"
+    )
     @PostMapping("/memory")
     public ResponseEntity<Void> saveInMemory(
             @Valid @RequestBody UnaryOperationRequest request
@@ -121,6 +128,11 @@ public class CalculatorController {
         return ResponseEntity.ok(new CalculatorResponse(result));
     }
 
+    @Operation(summary = "Clear calculator memory")
+    @ApiResponse(
+            responseCode = "204",
+            description = "Memory cleared successfully"
+    )
     @DeleteMapping("/memory")
     public ResponseEntity<Void> clearMemory() {
         calculatorService.clearMemory();
