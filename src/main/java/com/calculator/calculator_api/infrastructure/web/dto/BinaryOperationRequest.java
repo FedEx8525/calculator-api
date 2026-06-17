@@ -7,6 +7,7 @@ public record BinaryOperationRequest(
         @NotNull(message = "The first value is required")
         Double firstValue,
 
+        @NotNull(message = "The second value is required")
         Double secondValue
 ) {
 }
