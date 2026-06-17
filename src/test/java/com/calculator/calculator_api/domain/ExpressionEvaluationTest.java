@@ -23,4 +23,13 @@ public class ExpressionEvaluationTest {
 
         assertEquals(85.0, result);
     }
+
+    @Test
+    void shouldEvaluateParenthesesBeforeOtherOperations() {
+        double result = expressionEvaluation.evaluate(
+                "(2 + 3) * 4"
+        );
+
+        assertEquals(20.0, result);
+    }
 }
