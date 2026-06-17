@@ -12,6 +12,9 @@ public class ExpressionEvaluator {
     }
 
     public double evaluate(String expression) {
+        String normalizedExpression = expression.replaceAll("\\s+", "");
+
+        normalizedExpression = resolveParentheses(normalizedExpression);
         List<String> tokens = tokenize(expression);
 
         resolveMultiplicationAndDivision(tokens);
@@ -20,12 +23,11 @@ public class ExpressionEvaluator {
     }
 
     private List<String> tokenize(String expression) {
-        String normalizeExpression = expression.replaceAll("\\s+", "");
 
         List<String> tokens = new ArrayList<>();
         StringBuilder number = new StringBuilder();
 
-        for (char character : normalizeExpression.toCharArray()) {
+        for (char character : expression.toCharArray()) {
             if (Character.isDigit(character) || character == '.') {
                 number.append(character);
             } else {
@@ -83,6 +85,26 @@ public class ExpressionEvaluator {
             }
         }
         return result;
+    }
+
+    private String resolveParentheses(String expression) {
+        while (expression.contains("(")) {
+            int openingIndex = expression.lastIndexOf("(");
+            int closingIndex = expression.indexOf(")", openingIndex);
+
+            String innerExpression = expression.substring(
+                    openingIndex + 1,
+                    closingIndex
+            );
+
+            double innerResult = evaluate(innerExpression);
+
+            expression =
+                    expression.substring(0, openingIndex)
+                    + innerResult
+                    + expression.substring(closingIndex + 1);
+        }
+        return expression;
     }
 
 
