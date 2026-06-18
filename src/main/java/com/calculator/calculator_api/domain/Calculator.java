@@ -49,7 +49,7 @@ public class Calculator {
         return Math.PI;
     }
 
-    public  double euler() {
+    public double euler() {
         return Math.E;
     }
 }
