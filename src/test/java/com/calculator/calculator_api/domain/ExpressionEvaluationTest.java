@@ -7,17 +7,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ExpressionEvaluationTest {
 
-    private ExpressionEvaluator expressionEvaluation;
+    private ExpressionEvaluator expressionEvaluator;
 
     @BeforeEach
     void setUp() {
         Calculator calculator = new Calculator();
-        expressionEvaluation = new ExpressionEvaluator(calculator);
+        expressionEvaluator = new ExpressionEvaluator(calculator);
     }
 
     @Test
     void shouldEvaluateExpressionRespectingOperatorPrecedence() {
-        double result = expressionEvaluation.evaluate(
+        double result = expressionEvaluator.evaluate(
                 "13 + 25 +36 + 27 - 32 / 2"
         );
 
@@ -26,7 +26,7 @@ public class ExpressionEvaluationTest {
 
     @Test
     void shouldEvaluateParenthesesBeforeOtherOperations() {
-        double result = expressionEvaluation.evaluate(
+        double result = expressionEvaluator.evaluate(
                 "(2 + 3) * 4"
         );
 
@@ -35,14 +35,14 @@ public class ExpressionEvaluationTest {
 
     @Test
     void shouldEvaluateNestedParentheses() {
-        double result = expressionEvaluation.evaluate(
+        double result = expressionEvaluator.evaluate(
                 "2 * (3 + (4 * 5))");
         assertEquals(46.0, result);
     }
 
     @Test
     void shouldEvaluateModuloWithCorrectPrecedence() {
-        double result = expressionEvaluation.evaluate(
+        double result = expressionEvaluator.evaluate(
                 "10 + 7 % 4"
         );
 
