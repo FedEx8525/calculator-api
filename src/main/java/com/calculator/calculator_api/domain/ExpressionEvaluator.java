@@ -28,8 +28,14 @@ public class ExpressionEvaluator {
         List<String> tokens = new ArrayList<>();
         StringBuilder number = new StringBuilder();
 
-        for (char character : expression.toCharArray()) {
-            if (Character.isDigit(character) || character == '.') {
+        for (int index = 0; index < expression.length(); index++) {
+            char character = expression.charAt(index);
+
+            boolean isNegativeSign = character == '-' && (index == 0 || isOperator(expression.charAt(index - 1)));
+
+            if (Character.isDigit(character)
+                    || character == '.'
+                    || isNegativeSign) {
                 number.append(character);
             } else {
                 tokens.add(number.toString());
@@ -43,6 +49,15 @@ public class ExpressionEvaluator {
         return tokens;
     }
 
+    private boolean isOperator(char character) {
+        return character == '+'
+                || character == '-'
+                || character == '*'
+                || character == '/'
+                || character == '%'
+                || character == '^';
+    }
+
     private void resolveMultiplicationDivisionAndModulo(List<String> tokens) {
         int index = 0;
 
@@ -50,7 +65,7 @@ public class ExpressionEvaluator {
             String token = tokens.get(index);
 
             if (token.equals("*") || token.equals("/") || token.equals("%")) {
-                double leftValue = Double.parseDouble(tokens.get(index -1));
+                double leftValue = Double.parseDouble(tokens.get(index - 1));
                 double rightValue = Double.parseDouble(tokens.get(index + 1));
 
                 double result;
@@ -63,7 +78,7 @@ public class ExpressionEvaluator {
                     result = calculator.modulo(leftValue, rightValue);
                 }
 
-                tokens.set(index -1, String.valueOf(result));
+                tokens.set(index - 1, String.valueOf(result));
                 tokens.remove(index);
                 tokens.remove(index);
 
@@ -104,8 +119,8 @@ public class ExpressionEvaluator {
 
             expression =
                     expression.substring(0, openingIndex)
-                    + innerResult
-                    + expression.substring(closingIndex + 1);
+                            + innerResult
+                            + expression.substring(closingIndex + 1);
         }
         return expression;
     }
