@@ -10,8 +10,6 @@ public class CalculatorService {
     private final Calculator calculator;
     private final CalculatorMemory memory;
 
-
-
     public CalculatorService(Calculator calculator, CalculatorMemory memory) {
         this.calculator = calculator;
         this.memory = memory;

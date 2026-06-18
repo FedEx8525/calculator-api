@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class CalculatorServiceTest {
+class CalculatorServiceTest {
 
     private CalculatorService calculatorService;
 
@@ -66,6 +66,12 @@ public class CalculatorServiceTest {
     }
 
     @Test
+    void shouldThrowExceptionWhenModuloByZero() {
+        assertThrows(DivisionByZeroException.class, () ->
+                calculatorService.modulo(10.0, 0.0));
+    }
+
+    @Test
     void shouldPowerABaseForAnExponent() {
         double result = calculatorService.power(2.0, 3.0);
 
@@ -117,9 +123,7 @@ public class CalculatorServiceTest {
 
     @Test
     void shouldReturnZeroWhenMemoryIsEmpty() {
-        double result = calculatorService.readInMemory();
-
-        assertEquals(0.0, result);
+        assertEquals(0.0, calculatorService.readInMemory());
     }
 }
 
