@@ -17,7 +17,7 @@ public class ExpressionEvaluator {
         normalizedExpression = resolveParentheses(normalizedExpression);
         List<String> tokens = tokenize(normalizedExpression);
 
-        resolveMultiplicationAndDivision(tokens);
+        resolveMultiplicationDivisionAndModulo(tokens);
 
         return resolveAdditionAndSubtraction(tokens);
     }
@@ -42,13 +42,13 @@ public class ExpressionEvaluator {
         return tokens;
     }
 
-    private void resolveMultiplicationAndDivision(List<String> tokens) {
+    private void resolveMultiplicationDivisionAndModulo(List<String> tokens) {
         int index = 0;
 
         while (index < tokens.size()) {
             String token = tokens.get(index);
 
-            if (token.equals("*") || token.equals("/")) {
+            if (token.equals("*") || token.equals("/") || token.equals("%")) {
                 double leftValue = Double.parseDouble(tokens.get(index -1));
                 double rightValue = Double.parseDouble(tokens.get(index + 1));
 
@@ -56,8 +56,10 @@ public class ExpressionEvaluator {
 
                 if (token.equals("*")) {
                     result = calculator.multiply(leftValue, rightValue);
-                } else {
+                } else if (token.equals("/")) {
                     result = calculator.divide(leftValue, rightValue);
+                } else {
+                    result = calculator.modulo(leftValue, rightValue);
                 }
 
                 tokens.set(index -1, String.valueOf(result));
