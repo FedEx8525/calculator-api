@@ -15,7 +15,7 @@ public class ExpressionEvaluator {
         String normalizedExpression = expression.replaceAll("\\s+", "");
 
         normalizedExpression = resolveParentheses(normalizedExpression);
-        List<String> tokens = tokenize(expression);
+        List<String> tokens = tokenize(normalizedExpression);
 
         resolveMultiplicationAndDivision(tokens);
 
