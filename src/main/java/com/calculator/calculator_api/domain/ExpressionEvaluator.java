@@ -1,5 +1,7 @@
 package com.calculator.calculator_api.domain;
 
+import com.calculator.calculator_api.domain.exception.InvalidExpressionException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,9 @@ public class ExpressionEvaluator {
     }
 
     public double evaluate(String expression) {
+        if (expression == null || expression.isBlank()) {
+            throw new InvalidExpressionException();
+        }
         String normalizedExpression = expression.replaceAll("\\s+", "");
 
         normalizedExpression = resolveParentheses(normalizedExpression);
