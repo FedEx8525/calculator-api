@@ -67,4 +67,22 @@ public class ExpressionEvaluationTest {
 
         assertEquals(512.0, result);
     }
+
+    @Test
+    void shouldEvaluateExpressionStartingWithNegativeNumber() {
+        double result = expressionEvaluator.evaluate(
+                "- 5 + 10"
+        );
+
+        assertEquals(5.0, result);
+    }
+
+    @Test
+    void shouldEvaluateNegativeNumberAfterOperator() {
+        double result = expressionEvaluator.evaluate(
+                "5 * -2"
+        );
+
+        assertEquals(-10.0, result);
+    }
 }
