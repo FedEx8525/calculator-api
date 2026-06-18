@@ -32,4 +32,11 @@ public class ExpressionEvaluationTest {
 
         assertEquals(20.0, result);
     }
+
+    @Test
+    void shouldEvaluateNestedParentheses() {
+        double result = expressionEvaluation.evaluate(
+                "2 * (3 + (4 * 5))");
+        assertEquals(46.0, result);
+    }
 }
