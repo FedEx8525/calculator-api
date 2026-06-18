@@ -39,4 +39,13 @@ public class ExpressionEvaluationTest {
                 "2 * (3 + (4 * 5))");
         assertEquals(46.0, result);
     }
+
+    @Test
+    void shouldEvaluateModuloWithCorrectPrecedence() {
+        double result = expressionEvaluation.evaluate(
+                "10 + 7 % 4"
+        );
+
+        assertEquals(13.0, result);
+    }
 }
