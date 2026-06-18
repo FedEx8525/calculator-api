@@ -37,6 +37,7 @@ public class ExpressionEvaluationTest {
     void shouldEvaluateNestedParentheses() {
         double result = expressionEvaluator.evaluate(
                 "2 * (3 + (4 * 5))");
+
         assertEquals(46.0, result);
     }
 
@@ -47,5 +48,23 @@ public class ExpressionEvaluationTest {
         );
 
         assertEquals(13.0, result);
+    }
+
+    @Test
+    void shouldEvaluatePowerBeforeMultiplication() {
+        double result = expressionEvaluator.evaluate(
+                "2 ^ 3 * 4"
+        );
+
+        assertEquals(32.0, result);
+    }
+
+    @Test
+    void shouldEvaluatePowerFromRightToLeft() {
+        double result = expressionEvaluator.evaluate(
+                "2 ^ 3 ^ 2"
+        );
+
+        assertEquals(512.0, result);
     }
 }
