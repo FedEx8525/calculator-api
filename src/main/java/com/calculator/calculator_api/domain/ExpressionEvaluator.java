@@ -17,6 +17,7 @@ public class ExpressionEvaluator {
         normalizedExpression = resolveParentheses(normalizedExpression);
         List<String> tokens = tokenize(normalizedExpression);
 
+        resolvePowers(tokens);
         resolveMultiplicationDivisionAndModulo(tokens);
 
         return resolveAdditionAndSubtraction(tokens);
@@ -109,5 +110,27 @@ public class ExpressionEvaluator {
         return expression;
     }
 
+    private void resolvePowers(List<String> tokens) {
+        int index = tokens.size() - 1;
+
+        while (index >= 0) {
+            String token = tokens.get(index);
+
+            if (token.equals("^")) {
+                double leftValue = Double.parseDouble(tokens.get(index - 1));
+                double rightValue = Double.parseDouble(tokens.get(index + 1));
+
+                double result = calculator.power(leftValue, rightValue);
+
+                tokens.set(index - 1, String.valueOf(result));
+                tokens.remove(index);
+                tokens.remove(index);
+
+                index = tokens.size() - 1;
+            } else {
+                index--;
+            }
+        }
+    }
 
 }
