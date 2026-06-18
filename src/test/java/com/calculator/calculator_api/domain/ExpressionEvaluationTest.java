@@ -1,9 +1,11 @@
 package com.calculator.calculator_api.domain;
 
+import com.calculator.calculator_api.domain.exception.InvalidExpressionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ExpressionEvaluationTest {
 
@@ -84,5 +86,21 @@ public class ExpressionEvaluationTest {
         );
 
         assertEquals(-10.0, result);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenExpressionIsEmpty() {
+        assertThrows(
+                InvalidExpressionException.class,
+                () -> expressionEvaluation.evaluate("")
+        );
+    }
+
+    @Test
+    void shouldThrowExceptionWhenExpressionIsNull() {
+        assertThrows(
+                InvalidExpressionException.class,
+                () -> expressionEvaluation.evaluate(null)
+        );
     }
 }
